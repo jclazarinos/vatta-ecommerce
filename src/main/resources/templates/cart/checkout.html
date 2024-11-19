@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout</title>
+</head>
+<body>
+    <h1>Checkout</h1>
+    <form action="/cart/checkout" method="post">
+        <input type="hidden" name="userId" th:value="${cart.id}">
+        <button type="submit">Confirm Order</button>
+    </form>
+</body>
+</html>

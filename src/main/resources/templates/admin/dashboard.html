@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Dashboard de Administración</h1>
+    <div>
+        <p>Total de productos: <span th:text="${totalProducts}"></span></p>
+        <p>Total de categorías: <span th:text="${totalCategories}"></span></p>
+    </div>
+    <div>
+        <a href="/admin/products">Ver productos</a>
+        <a href="/admin/categories">Ver categorías</a>
+    </div>
+</body>
+</html>

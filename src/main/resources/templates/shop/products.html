@@ -1,0 +1,48 @@
+<!-- src/main/resources/templates/shop/products.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Productos</title>
+    <link rel="stylesheet" href="/css/shop.css">
+</head>
+<body>
+    <header>
+        <h1>Catálogo de Productos</h1>
+        <form action="/shop/products" method="get">
+            <input type="text" name="search" placeholder="Buscar productos..." value="${searchQuery}">
+            <button type="submit">Buscar</button>
+        </form>
+    </header>
+
+    <div class="filters">
+        <h3>Filtrar por Categoría:</h3>
+        <form action="/shop/products" method="get">
+            <select name="category">
+                <option value="">Seleccionar categoría</option>
+                <!-- Aquí agregamos las categorías dinámicamente -->
+                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+            </select>
+            <button type="submit">Filtrar</button>
+        </form>
+    </div>
+
+    <div class="products">
+        <h2>Productos</h2>
+        <div>
+            <ul>
+                <!-- Mostrar cada producto -->
+                <li th:each="product : ${products}">
+                    <h2 th:text="${product.name}"></h2>
+                    <p th:text="${product.description}"></p>
+                    <span th:text="${product.price}"></span>
+                    <a th:href="@{/products/{id}(id=${product.id})}">Ver detalles</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="/js/shop.js"></script>
+</body>
+</html>

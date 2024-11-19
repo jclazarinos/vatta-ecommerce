@@ -1,0 +1,28 @@
+<!-- src/main/resources/templates/shop/product-detail.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Producto</title>
+    <link rel="stylesheet" href="/css/shop.css">
+</head>
+<body>
+    <header>
+        <h1 th:text="${product.name}"></h1>
+        <a href="/shop/products">Volver al catálogo</a>
+    </header>
+
+    <div class="product-detail">
+        <div class="product-info">
+            <img th:src="@{/images/{image}(image=${product.imageUrl})}" alt="Imagen del producto">
+            <p th:text="${product.description}"></p>
+            <p th:text="'Precio: ' + ${product.price}"></p>
+            <p th:text="'Categoría: ' + ${product.categoryName}"></p>
+            <button>Agregar al carrito</button>
+        </div>
+    </div>
+
+    <script src="/js/shop.js"></script>
+</body>
+</html>

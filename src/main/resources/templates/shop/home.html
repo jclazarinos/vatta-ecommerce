@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a Vatta Store</title>
+    <link rel="stylesheet" th:href="@{/static/css/style.css}">
+
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <div class="main-content">
+        <h1>Bienvenido a Vatta Store</h1>
+        
+        <section class="featured-products">
+            <h2>Productos Destacados</h2>
+            <div class="product-list">
+                <div class="product-card" th:each="product : ${featuredProducts}">
+                    <img th:src="@{${product.imageUrl}}" alt="Imagen del producto" />
+                    <h3 th:text="${product.name}"></h3>
+                    <p th:text="${product.description}"></p>
+                    <p>$<span th:text="${product.price}"></span></p>
+                    <a href="/productos/{product.id}" class="btn">Ver Producto</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-us">
+            <h2>Sobre Nosotros</h2>
+            <p>Vatta Store es tu tienda en línea confiable para comprar los mejores productos al mejor precio.</p>
+        </section>
+    </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>
