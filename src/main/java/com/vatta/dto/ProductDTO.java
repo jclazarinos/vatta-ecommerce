@@ -4,31 +4,45 @@ import com.vatta.model.Product;
 
 public class ProductDTO {
 
+    private Long id;
     private String name;
     private String description;
     private double price;
-    private Long categoryId; // Usamos categoryId como campo para la relación con Category
+    private Long categoryId;
+    private String imageUrl;  // Usamos imageUrl para la imagen del producto
 
     // Constructor vacío (opcional)
     public ProductDTO() {}
 
     // Constructor con parámetros
-    public ProductDTO(String name, String description, double price, String string, Long categoryId) {
+    public ProductDTO(Long id, String name, String description, double price, String imageUrl, Long categoryId) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.imageUrl = imageUrl;
         this.categoryId = categoryId;
     }
 
     // Constructor para convertir un producto en DTO
     public ProductDTO(Product product) {
+        this.id = product.getId();
         this.name = product.getName();
         this.description = product.getDescription();
         this.price = product.getPrice();
-        this.categoryId = product.getCategory().getId(); // Aquí usamos la categoría asociada
+        this.categoryId = product.getCategory() != null ? product.getCategory().getId() : null; // Verificación en caso de que category sea null
+        this.imageUrl = product.getImageUrl();  // Aquí usamos la URL de la imagen del producto
     }
 
     // Getters y setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -62,10 +76,10 @@ public class ProductDTO {
     }
 
     public String getImageUrl() {
-        throw new UnsupportedOperationException("Unimplemented method 'getImageUrl'");
+        return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
-        throw new UnsupportedOperationException("Unimplemented method 'setImageUrl'");
+        this.imageUrl = imageUrl;
     }
 }

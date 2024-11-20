@@ -2,6 +2,8 @@ package com.vatta.controller;
 
 import com.vatta.dto.ProductDTO;
 import com.vatta.service.ProductService;
+
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,21 +21,22 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping({"/products", "/products/"})  // Manejamos ambas variantes de la URL
+    @GetMapping({"/products", "/products/"})
     public String listProducts(Model model) {
         try {
-            model.addAttribute("products", productService.findAll());
+            List<ProductDTO> products = productService.findAll();
+            model.addAttribute("products", products);
+            System.out.println("Productos cargados: " + products.size());  // Log para verificar la carga
             return "shop/products";
         } catch (Exception e) {
             model.addAttribute("error", "Error al cargar los productos: " + e.getMessage());
             return "shop/products"; // Retornamos la misma vista pero con mensaje de error
         }
     }
+    
 
     @GetMapping("/products/{id}")
-    public String productDetail(@PathVariable Long id, 
-                              Model model, 
-                              RedirectAttributes redirectAttributes) {
+    public String productDetail(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
             ProductDTO productDTO = productService.findById(id);
             if (productDTO == null) {
@@ -46,5 +49,7 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("error", "Error al cargar el producto: " + e.getMessage());
             return "redirect:/shop/products";
         }
-    }
+}
+
+    
 }

@@ -31,6 +31,7 @@ public class AdminService {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         return new ProductDTO(
+                product.getId(),
                 product.getName(),
                 product.getDescription(),
                 product.getPrice(),

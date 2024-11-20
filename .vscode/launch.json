@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-VattaApplication<vatta>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.vatta.VattaApplication",
+            "projectName": "vatta",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

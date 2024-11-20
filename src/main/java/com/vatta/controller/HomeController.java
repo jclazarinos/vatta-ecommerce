@@ -27,10 +27,10 @@ public class HomeController {
     @GetMapping("/home")
     public String home(Model model) {
         // Obtener productos destacados o los primeros 5 productos
-        List<Product> featuredProducts = productService.getFeaturedProducts(); // Método que debes implementar en el servicio
+        List<Product> featuredProducts = productService.getFeaturedProducts(); 
         model.addAttribute("featuredProducts", featuredProducts);
 
-        // Deberías agregar otros atributos al modelo, como categorías o promociones
-        return "shop/home";  // Redirige a la plantilla 'home.html' (debes crear esta plantilla)
+       
+        return "shop/home";  
     }
 }

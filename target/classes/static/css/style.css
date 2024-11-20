@@ -1,0 +1,204 @@
+/* Estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    font-weight: 400;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.8;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Header */
+header {
+    background-color: #000;
+    color: #fff;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+header nav a {
+    margin-left: 20px;
+    color: #fff;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: #ccc;
+}
+
+/* Main content */
+.main-content {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* Sección de productos destacados */
+.featured-products {
+    margin-top: 40px;
+}
+
+.featured-products .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.product-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.product-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.product-card p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.product-card .btn {
+    display: inline-block;
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+.product-card .btn:hover {
+    background-color: #333;
+}
+
+/* Sección sobre nosotros */
+.about-us {
+    background-color: #fff;
+    padding: 40px 20px;
+    margin-top: 60px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-us p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+/* Footer */
+footer {
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+footer p {
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+footer a:hover {
+    color: #ccc;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .product-card {
+        width: 200px;
+    }
+
+    .main-content {
+        padding: 20px 10px;
+    }
+
+    .featured-products .product-list {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header nav {
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
+    .featured-products .product-list {
+        flex-direction: column;
+    }
+
+    .product-card {
+        width: 100%;
+    }
+}

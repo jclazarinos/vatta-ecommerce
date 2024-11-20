@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos</title>
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+    <a href="/admin/products/create">Crear nuevo producto</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.description}"></td>
+                <td th:text="${product.price}"></td>
+                <td th:text="${product.category.name}"></td>
+                <td>
+                    <a th:href="@{/admin/products/edit/{id}(id=${product.id})}">Editar</a>
+                    <a th:href="@{/admin/products/delete/{id}(id=${product.id})}">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
