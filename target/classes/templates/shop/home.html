@@ -3,57 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda Online</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        .hero {
+            position: relative;
+            background: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        .btn-view-products {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 30px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .btn-view-products:hover {
+            background-color: #1abc9c;
+            color: #fff;
+        }
+        .info-section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .info-section h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .info-section p {
+            font-size: 1rem;
+            color: #555;
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <!-- Barra de navegación -->
-    <header th:replace="~{fragments/header :: navbar}"></header>
+<body>
 
-    <!-- Banner principal -->
-    <div class="container-fluid bg-danger text-white py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h1>Bienvenido a nuestra tienda</h1>
-                    <p class="lead">Descubre nuestros productos destacados y las mejores ofertas.</p>
-                    <a th:href="@{/shop/products}" class="btn btn-light btn-lg">Ver Productos</a>
-                </div>
-            </div>
-        </div>
-    </div>
+<header th:replace="~{fragments/header :: navbar}"></header>
 
-    <!-- Sección de productos destacados -->
-    <div class="container my-5">
-        <h2 class="text-center mb-4 text-danger">Productos Destacados</h2>
-        <div class="row">
-            <!-- Iteración sobre los productos destacados -->
-            <div th:each="product : ${featuredProducts}" class="col-md-4 mb-4">
-                <div class="card h-100 border-danger shadow-sm">
-                    <img th:src="${product.imageUrl}" class="card-img-top" 
-                         alt="Imagen del producto" 
-                         onerror="this.src='/images/default-product.jpg'">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${product.name}">Nombre del Producto</h5>
-                        <p class="card-text" th:text="${product.description}">Descripción del producto</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="h5 mb-0" th:text="'$' + ${product.price}">$0.00</span>
-                            <a th:href="@{/shop/products/{id}(id=${product.id})}" class="btn btn-danger">
-                                Ver Detalles
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- Hero Section -->
+<section id="hero" class="hero">
+    <h2>Bienvenido a <span>E-commerce Vatta</span></h2>
+    <p>Descubre una amplia variedad de productos con la mejor calidad y precios competitivos.</p>
+    <a th:href="@{/shop/products}" class="btn-view-products">Ver Productos</a>
+</section>
 
-    <!-- Footer -->
-    <div th:replace="fragments/footer :: footer"></div>
+<!-- Info Section -->
+<section class="info-section">
+    <h3>¿Qué encontrarás en nuestra tienda?</h3>
+    <p>Ofrecemos productos de las mejores marcas en tecnología, moda, hogar y más. 
+       Nuestra prioridad es brindarte una experiencia de compra segura, rápida y confiable.</p>
+</section>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<div th:replace="fragments/footer :: footer"></div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
