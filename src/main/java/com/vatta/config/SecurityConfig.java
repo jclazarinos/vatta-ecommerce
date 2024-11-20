@@ -16,48 +16,48 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(authorize -> authorize
-                        // Páginas públicas
-                        .requestMatchers("/", "/home/**", "/shop/products/**", "/shop/product-detail/**", "/auth/login", "/auth/register")
-                        .permitAll()
-                        // Autenticación y recursos relacionados
-                        .requestMatchers("/auth/**", "/error")
-                        .permitAll()
-                        // Recursos estáticos
-                        .requestMatchers("/css/**", "/js/**", "/images/**", "/assets/**", "/webjars/**")
-                        .permitAll()
-                        // Carrito requiere usuario logueado
-                        .requestMatchers("/cart/**")
-                        .authenticated()
-                        // Perfil y Checkout requieren usuario logueado
-                        .requestMatchers("/profile/**", "/checkout/**")
-                        .authenticated()
-                        // Panel de administración requiere rol ADMIN
-                        .requestMatchers("/admin/**", "/admin/dashboard/**",",admin/products/**")
-                        .hasRole("ADMIN")
-                        // Cualquier otra ruta requiere autenticación
-                        .anyRequest()
-                        .authenticated()
-                )
-                .formLogin(form -> form
-                        .loginPage("/auth/login")
-                        .loginProcessingUrl("/auth/login-process")
-                        .defaultSuccessUrl("/", true)
-                        .failureUrl("/auth/login?error=true")
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
-                        .logoutSuccessUrl("/?logout")
-                        .deleteCookies("JSESSIONID")
-                        .invalidateHttpSession(true)
-                        .clearAuthentication(true)
-                        .permitAll()
-                )
-                .exceptionHandling(handling -> handling
-                        .accessDeniedPage("/auth/access-denied")
-                );
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(authorize -> authorize
+                // Rutas públicas (sin autenticación)
+                .requestMatchers("/", "/home/**", "/shop/products/**", "/shop/product-detail/**", "/auth/login", "/auth/register")
+                    .permitAll()
+                .requestMatchers("/auth/**", "/error")
+                    .permitAll()
+                .requestMatchers("/css/**", "/js/**", "/images/**", "/assets/**", "/webjars/**")
+                    .permitAll()
+
+                // Rutas del carrito y perfil de usuario que requieren autenticación
+                .requestMatchers("/cart/**")
+                    .authenticated()
+                .requestMatchers("/profile/**", "/checkout/**")
+                    .authenticated()
+
+                // Aquí cambiamos el acceso a todo lo relacionado con admin a público
+                .requestMatchers("/admin/**")  // Acceso público sin autenticación
+                    .permitAll()
+
+                // Cualquier otra ruta debe estar autenticada
+                .anyRequest()
+                    .authenticated()
+            )
+            .formLogin(form -> form
+                .loginPage("/auth/login")
+                .loginProcessingUrl("/auth/login-process")
+                .defaultSuccessUrl("/", true)
+                .failureUrl("/auth/login?error=true")
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
+                .logoutSuccessUrl("/?logout")
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .permitAll()
+            )
+            .exceptionHandling(handling -> handling
+                .accessDeniedPage("/auth/access-denied")
+            );
 
         return http.build();
     }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Producto</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Editar Producto</h2>
+
+        <form th:action="@{/admin/product-edit/{id}(id=${productDTO.id})}" th:object="${productDTO}" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Descripción</label>
+                <textarea class="form-control" id="description" th:field="*{description}" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Precio</label>
+                <input type="number" class="form-control" id="price" th:field="*{price}" required>
+            </div>
+            <div class="mb-3">
+                <label for="categoryId" class="form-label">Categoría</label>
+                <select class="form-select" id="categoryId" th:field="*{categoryId}" required>
+                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Categoría</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Actualizar Producto</button>
+        </form>
+
+        <a href="/admin/dashboard" class="btn btn-secondary mt-2">Volver al Dashboard</a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

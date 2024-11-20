@@ -1,11 +1,9 @@
 package com.vatta.controller;
 
 import com.vatta.dto.ProductDTO;
+import com.vatta.model.Category;
 import com.vatta.service.AdminService;
 import com.vatta.service.CategoryService;
-
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,92 +20,62 @@ public class AdminController {
         this.categoryService = categoryService;
     }
 
-    // Vista del DashbAoard
+    // Mostrar productos en el panel
     @GetMapping("/dashboard")
-    public String dashboard(HttpSession session) {
-        // Verificar si el usuario está autenticado y es admin
-        if (session.getAttribute("username") == null || 
-            !"ROLE_ADMIN".equals(session.getAttribute("role"))) {
-            return "redirect:/auth/login";
-        }
-        return "admin/products/dashboard";
-    }
-
-    // Lista de productos
-    @GetMapping("/products")
-    public String listProducts(HttpSession session, Model model) {
-        // Verificar si el usuario está autenticado y es admin
-        if (session.getAttribute("username") == null || 
-            !"ROLE_ADMIN".equals(session.getAttribute("role"))) {
-            return "redirect:/auth/login";
-        }
+    public String showDashboard(Model model) {
         model.addAttribute("products", adminService.getAllProducts());
-        return "admin/products/list";
+        return "admin/dashboard";
     }
 
-    // Crear un nuevo producto
-    @GetMapping("/products/create")
-    public String showCreateProductForm(HttpSession session, Model model) {
-        // Verificar si el usuario está autenticado y es admin
-        if (session.getAttribute("username") == null || 
-            !"ROLE_ADMIN".equals(session.getAttribute("role"))) {
-            return "redirect:/auth/login";
-        }
-        model.addAttribute("productDTO", new ProductDTO()); // Para crear un nuevo producto
+    // Crear un nuevo producto (Formulario)
+    @GetMapping("/product-create")
+    public String showCreateProductForm(Model model) {
         model.addAttribute("categories", categoryService.getAllCategories());
-        return "admin/products/create";
+        model.addAttribute("productDTO", new ProductDTO());
+        return "admin/product-create";
     }
 
     // Guardar un nuevo producto
-    @PostMapping("/products")
-    public String createProduct(HttpSession session, @ModelAttribute("productDTO") ProductDTO productDTO) {
-        // Verificar si el usuario está autenticado y es admin
-        if (session.getAttribute("username") == null || 
-            !"ROLE_ADMIN".equals(session.getAttribute("role"))) {
-            return "redirect:/auth/login";
-        }
-        // Aquí se crea el producto usando el servicio
+    @PostMapping("/product-create")
+    public String createProduct(@ModelAttribute ProductDTO productDTO) {
         adminService.createProduct(productDTO);
-        return "redirect:/admin/products"; // Redirige a la lista de productos
+        return "redirect:/admin/dashboard";
     }
 
-    // Editar un producto
-    @GetMapping("/products/edit/{id}")
-    public String showEditProductForm(HttpSession session, @PathVariable Long id, Model model) {
-        // Verificar si el usuario está autenticado y es admin
-        if (session.getAttribute("username") == null || 
-            !"ROLE_ADMIN".equals(session.getAttribute("role"))) {
-            return "redirect:/auth/login";
-        }
+    // Crear una nueva categoría (Formulario)
+    @GetMapping("/category-create")
+    public String showCreateCategoryForm(Model model) {
+        model.addAttribute("category", new Category());
+        return "admin/category-create";
+    }
+
+    // Guardar una nueva categoría
+    @PostMapping("/category-create")
+    public String createCategory(@ModelAttribute Category category) {
+        categoryService.createCategory(category); // Método para guardar la nueva categoría
+        return "redirect:/admin/dashboard"; // Redirigir al dashboard después de crear la categoría
+    }
+
+    // Editar un producto (Formulario)
+    @GetMapping("/product-edit/{id}")
+    public String showEditProductForm(@PathVariable("id") Long id, Model model) {
         ProductDTO productDTO = adminService.getProductDTOById(id);
         model.addAttribute("productDTO", productDTO);
         model.addAttribute("categories", categoryService.getAllCategories());
-        return "admin/products/edit";
+        return "admin/product-edit";
     }
 
     // Actualizar un producto
-    @PostMapping("/products/edit/{id}")
-    public String updateProduct(HttpSession session, @PathVariable Long id, @ModelAttribute("productDTO") ProductDTO productDTO) {
-        // Verificar si el usuario está autenticado y es admin
-        if (session.getAttribute("username") == null || 
-            !"ROLE_ADMIN".equals(session.getAttribute("role"))) {
-            return "redirect:/auth/login";
-        }
+    @PostMapping("/product-edit/{id}")
+    public String updateProduct(@PathVariable("id") Long id, @ModelAttribute ProductDTO productDTO) {
         adminService.updateProduct(id, productDTO);
-        return "redirect:/admin/products";
+        return "redirect:/admin/dashboard";
     }
 
     // Eliminar un producto
-    @GetMapping("/products/delete/{id}")
-    public String deleteProduct(HttpSession session, @PathVariable Long id) {
-        // Verificar si el usuario está autenticado y es admin
-        if (session.getAttribute("username") == null || 
-            !"ROLE_ADMIN".equals(session.getAttribute("role"))) {
-            return "redirect:/auth/login";
-        }
+    @GetMapping("/product-delete/{id}")
+    public String deleteProduct(@PathVariable("id") Long id) {
         adminService.deleteProduct(id);
-        return "redirect:/admin/products";
+        return "redirect:/admin/dashboard";
     }
-
-    // Otros métodos según sea necesario
 }
