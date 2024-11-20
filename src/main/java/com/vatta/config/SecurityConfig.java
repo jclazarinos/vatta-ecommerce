@@ -32,8 +32,7 @@ public class SecurityConfig {
                 .requestMatchers("/profile/**", "/checkout/**")
                     .authenticated()
 
-                // Aquí cambiamos el acceso a todo lo relacionado con admin a público
-                .requestMatchers("/admin/**")  // Acceso público sin autenticación
+                .requestMatchers("/admin/**")  
                     .permitAll()
 
                 // Cualquier otra ruta debe estar autenticada

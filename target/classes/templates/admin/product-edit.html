@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Producto</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
-<body>
+<body class="bg-light text-dark">
+
     <div class="container mt-4">
-        <h2>Editar Producto</h2>
+        <!-- Título principal -->
+        <h2 class="text-center text-danger">Editar Producto</h2>
 
         <form th:action="@{/admin/product-edit/{id}(id=${productDTO.id})}" th:object="${productDTO}" method="post">
             <div class="mb-3">
@@ -29,7 +32,7 @@
                     <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Categoría</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Actualizar Producto</button>
+            <button type="submit" class="btn btn-danger w-100">Actualizar Producto</button>
         </form>
 
         <a href="/admin/dashboard" class="btn btn-secondary mt-2">Volver al Dashboard</a>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
-<body>
+<body class="bg-light">
     <!-- Incluir header desde fragmentos -->
     <header th:replace="fragments/header :: navbar"></header>
 
@@ -16,13 +16,13 @@
         <!-- Filtros y búsqueda -->
         <div class="row mb-4">
             <div class="col-md-6">
-                <h2>Nuestros Productos</h2>
+                <h2 class="text-danger">Nuestros Productos</h2>
             </div>
             <div class="col-md-6">
                 <div class="d-flex justify-content-end">
                     <div class="input-group w-auto">
                         <input type="text" class="form-control" placeholder="Buscar productos...">
-                        <button class="btn btn-primary" type="button">
+                        <button class="btn btn-danger" type="button">
                             <i class="bi bi-search"></i>
                         </button>
                     </div>
@@ -30,38 +30,32 @@
             </div>
         </div>
 
- <!-- Grid de productos -->
-<div class="row" th:if="${not #lists.isEmpty(products)}">
-    <div th:each="product : ${products}" class="col-md-3 mb-4">
-        <div class="card h-100">
-            <!-- Usamos una sola expresión condicional -->
-            <img th:src="@{${product.imageUrl != null ? product.imageUrl : '/images/default-product.jpg'}}"
-            class="card-img-top" alt="Imagen del producto">
-            <div class="card-body">
-                <h5 class="card-title" th:text="${product.name}">Nombre del Producto</h5>
-                <p class="card-text text-truncate" th:text="${product.description}">Descripción del producto</p>
+        <!-- Grid de productos -->
+        <div class="row" th:if="${not #lists.isEmpty(products)}">
+            <div th:each="product : ${products}" class="col-md-3 mb-4">
+                <div class="card h-100 border-danger shadow-sm">
+                    <!-- Usamos una sola expresión condicional -->
+                    <img th:src="@{${product.imageUrl != null ? product.imageUrl : '/images/default-product.jpg'}}"
+                        class="card-img-top" alt="Imagen del producto">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${product.name}">Nombre del Producto</h5>
+                        <p class="card-text text-truncate" th:text="${product.description}">Descripción del producto</p>
 
-                <div class="d-flex justify-content-between align-items-center">
-                    <!-- Muestra el precio tal como está en la base de datos -->
-                    <span class="h5 mb-0 price" th:text="'S/' + ${product.price}">S/0.00</span>
-                    <a th:href="@{/shop/products/{id}(id=${product.id})}" class="btn btn-primary btn-sm">Ver Detalles</a>
-
-
-                    
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="h5 mb-0 price" th:text="'S/' + ${product.price}">S/0.00</span>
+                            <a th:href="@{/shop/products/{id}(id=${product.id})}" class="btn btn-danger btn-sm">Ver Detalles</a>
+                        </div>
+                    </div>
                 </div>
-                
             </div>
         </div>
-    </div>
-</div>
-
-
 
         <!-- Mensaje cuando no hay productos -->
         <div th:if="${#lists.isEmpty(products)}" class="alert alert-info text-center">
             No hay productos disponibles en este momento.
         </div>
     </div>
+
     <!-- Incluir footer desde fragmentos -->
     <footer th:replace="fragments/footer :: footer"></footer>
 

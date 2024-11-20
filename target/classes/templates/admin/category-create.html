@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Categoría</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
-<body>
+<body class="bg-light text-dark">
+
     <div class="container mt-4">
-        <h2>Crear Nueva Categoría</h2>
+        <!-- Título principal -->
+        <h2 class="text-center text-danger">Crear Nueva Categoría</h2>
 
         <form th:action="@{/admin/category-create}" th:object="${category}" method="post">
             <div class="mb-3">
@@ -16,7 +19,7 @@
                 <input type="text" class="form-control" id="name" th:field="*{name}" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Crear Categoría</button>
+            <button type="submit" class="btn btn-danger w-100">Crear Categoría</button>
         </form>
 
         <a href="/admin/dashboard" class="btn btn-secondary mt-2">Volver al Dashboard</a>

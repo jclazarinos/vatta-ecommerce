@@ -5,37 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Producto</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
-<body>
-    <div class="container mt-4">
-        <h2>Crear Producto</h2>
+<body class="bg-white text-dark">
 
+    <div class="container mt-4">
+        <!-- Título de la página -->
+        <h2 class="text-center text-danger mb-4">Crear Producto</h2>
+
+        <!-- Formulario para crear un producto -->
         <form th:action="@{/admin/product-create}" th:object="${productDTO}" method="post">
             <div class="mb-3">
-                <label for="name" class="form-label">Nombre</label>
+                <label for="name" class="form-label text-dark">Nombre</label>
                 <input type="text" class="form-control" id="name" th:field="*{name}" required>
             </div>
             <div class="mb-3">
-                <label for="description" class="form-label">Descripción</label>
+                <label for="description" class="form-label text-dark">Descripción</label>
                 <textarea class="form-control" id="description" th:field="*{description}" required></textarea>
             </div>
             <div class="mb-3">
-                <label for="price" class="form-label">Precio</label>
+                <label for="price" class="form-label text-dark">Precio</label>
                 <input type="number" class="form-control" id="price" th:field="*{price}" required>
             </div>
             <div class="mb-3">
-                <label for="categoryId" class="form-label">Categoría</label>
+                <label for="categoryId" class="form-label text-dark">Categoría</label>
                 <select class="form-select" id="categoryId" th:field="*{categoryId}" required>
                     <!-- Se llenarán las categorías desde el controlador -->
                     <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Categoría</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Crear Producto</button>
+            <button type="submit" class="btn btn-danger w-100">Crear Producto</button>
         </form>
 
-        <a href="/admin/dashboard" class="btn btn-secondary mt-2">Volver al Dashboard</a>
+        <!-- Botón de volver al Dashboard -->
+        <a href="/admin/dashboard" class="btn btn-dark mt-2 w-100">Volver al Dashboard</a>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

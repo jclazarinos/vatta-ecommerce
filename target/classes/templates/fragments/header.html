@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
     <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">Vatta Store</a>
@@ -18,36 +18,32 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/}">Home</a>
+                        <a class="nav-link text-white" th:href="@{/}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/shop/products}">Products</a>
+                        <a class="nav-link text-white" th:href="@{/shop/products}">Products</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
-                    <!-- Usuario no autenticado -->
                     <li class="nav-item" th:if="${session.username == null}">
-                        <a class="nav-link" th:href="@{/auth/login}">Login</a>
+                        <a class="nav-link text-white" th:href="@{/auth/login}">Login</a>
                     </li>
                     <li class="nav-item" th:if="${session.username == null}">
-                        <a class="nav-link" th:href="@{/auth/register}">Register</a>
+                        <a class="nav-link text-white" th:href="@{/auth/register}">Register</a>
                     </li>
-                    
-                    <!-- Usuario autenticado -->
                     <li class="nav-item" th:if="${session.username != null}">
-                        <a class="nav-link" th:href="@{/cart}">
+                        <a class="nav-link text-white" th:href="@{/cart}">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="badge bg-danger" th:text="${cartItemCount}">0</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" th:if="${session.username != null}">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i>
                             <span th:text="${session.username}">User</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <!-- Verifica el rol con ROLE_ prefix -->
                             <li th:if="${session.role == 'ROLE_ADMIN'}">
                                 <a class="dropdown-item" th:href="@{/admin/dashboard}">Admin Dashboard</a>
                             </li>
@@ -60,16 +56,11 @@
                         </ul>
                     </li>
                 </ul>
-                
-                <!-- Debug info - puedes quitar esto después -->
-                <div th:if="${session.username != null}" style="color: white; font-size: 12px; margin-left: 10px;">
-                    Role: <span th:text="${session.role}"></span>
-                </div>
+               
             </div>
         </div>
     </nav>
 
-    <!-- Scripts de Bootstrap -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
