@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -20,7 +19,17 @@ public class UserService {
 
     public User registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("ROLE_USER"); // Default role
+        // Si no se especifica un rol, asignar ROLE_USER por defecto
+        if (user.getRole() == null || user.getRole().isEmpty()) {
+            user.setRole("ROLE_USER");
+        }
+        return userRepository.save(user);
+    }
+
+    // Método para crear un usuario administrador
+    public User registerAdmin(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("ROLE_ADMIN");
         return userRepository.save(user);
     }
 
@@ -30,5 +39,9 @@ public class UserService {
             return user;
         }
         return Optional.empty();
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
     }
 }

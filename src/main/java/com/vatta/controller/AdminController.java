@@ -3,6 +3,9 @@ package com.vatta.controller;
 import com.vatta.dto.ProductDTO;
 import com.vatta.service.AdminService;
 import com.vatta.service.CategoryService;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,22 +22,37 @@ public class AdminController {
         this.categoryService = categoryService;
     }
 
-    // Vista del Dashboard
+    // Vista del DashbAoard
     @GetMapping("/dashboard")
-    public String dashboard() {
-        return "admin/dashboard";
+    public String dashboard(HttpSession session) {
+        // Verificar si el usuario está autenticado y es admin
+        if (session.getAttribute("username") == null || 
+            !"ROLE_ADMIN".equals(session.getAttribute("role"))) {
+            return "redirect:/auth/login";
+        }
+        return "admin/products/dashboard";
     }
 
     // Lista de productos
     @GetMapping("/products")
-    public String listProducts(Model model) {
+    public String listProducts(HttpSession session, Model model) {
+        // Verificar si el usuario está autenticado y es admin
+        if (session.getAttribute("username") == null || 
+            !"ROLE_ADMIN".equals(session.getAttribute("role"))) {
+            return "redirect:/auth/login";
+        }
         model.addAttribute("products", adminService.getAllProducts());
         return "admin/products/list";
     }
 
     // Crear un nuevo producto
     @GetMapping("/products/create")
-    public String showCreateProductForm(Model model) {
+    public String showCreateProductForm(HttpSession session, Model model) {
+        // Verificar si el usuario está autenticado y es admin
+        if (session.getAttribute("username") == null || 
+            !"ROLE_ADMIN".equals(session.getAttribute("role"))) {
+            return "redirect:/auth/login";
+        }
         model.addAttribute("productDTO", new ProductDTO()); // Para crear un nuevo producto
         model.addAttribute("categories", categoryService.getAllCategories());
         return "admin/products/create";
@@ -42,7 +60,12 @@ public class AdminController {
 
     // Guardar un nuevo producto
     @PostMapping("/products")
-    public String createProduct(@ModelAttribute("productDTO") ProductDTO productDTO) {
+    public String createProduct(HttpSession session, @ModelAttribute("productDTO") ProductDTO productDTO) {
+        // Verificar si el usuario está autenticado y es admin
+        if (session.getAttribute("username") == null || 
+            !"ROLE_ADMIN".equals(session.getAttribute("role"))) {
+            return "redirect:/auth/login";
+        }
         // Aquí se crea el producto usando el servicio
         adminService.createProduct(productDTO);
         return "redirect:/admin/products"; // Redirige a la lista de productos
@@ -50,7 +73,12 @@ public class AdminController {
 
     // Editar un producto
     @GetMapping("/products/edit/{id}")
-    public String showEditProductForm(@PathVariable Long id, Model model) {
+    public String showEditProductForm(HttpSession session, @PathVariable Long id, Model model) {
+        // Verificar si el usuario está autenticado y es admin
+        if (session.getAttribute("username") == null || 
+            !"ROLE_ADMIN".equals(session.getAttribute("role"))) {
+            return "redirect:/auth/login";
+        }
         ProductDTO productDTO = adminService.getProductDTOById(id);
         model.addAttribute("productDTO", productDTO);
         model.addAttribute("categories", categoryService.getAllCategories());
@@ -59,8 +87,25 @@ public class AdminController {
 
     // Actualizar un producto
     @PostMapping("/products/edit/{id}")
-    public String updateProduct(@PathVariable Long id, @ModelAttribute("productDTO") ProductDTO productDTO) {
+    public String updateProduct(HttpSession session, @PathVariable Long id, @ModelAttribute("productDTO") ProductDTO productDTO) {
+        // Verificar si el usuario está autenticado y es admin
+        if (session.getAttribute("username") == null || 
+            !"ROLE_ADMIN".equals(session.getAttribute("role"))) {
+            return "redirect:/auth/login";
+        }
         adminService.updateProduct(id, productDTO);
+        return "redirect:/admin/products";
+    }
+
+    // Eliminar un producto
+    @GetMapping("/products/delete/{id}")
+    public String deleteProduct(HttpSession session, @PathVariable Long id) {
+        // Verificar si el usuario está autenticado y es admin
+        if (session.getAttribute("username") == null || 
+            !"ROLE_ADMIN".equals(session.getAttribute("role"))) {
+            return "redirect:/auth/login";
+        }
+        adminService.deleteProduct(id);
         return "redirect:/admin/products";
     }
 

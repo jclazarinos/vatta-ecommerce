@@ -34,7 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/profile/**", "/checkout/**")
                         .authenticated()
                         // Panel de administración requiere rol ADMIN
-                        .requestMatchers("/admin/**")
+                        .requestMatchers("/admin/**", "/admin/dashboard/**",",admin/products/**")
                         .hasRole("ADMIN")
                         // Cualquier otra ruta requiere autenticación
                         .anyRequest()

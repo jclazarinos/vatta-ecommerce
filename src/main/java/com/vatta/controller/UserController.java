@@ -28,16 +28,23 @@ public class UserController {
 
     @PostMapping("/login")
     public String processLogin(@ModelAttribute("userDTO") UserDTO userDTO, Model model, HttpSession session) {
-        Optional<User> user = userService.authenticate(userDTO.getUsername(), userDTO.getPassword());
-        if (user.isPresent()) {
-            System.out.println("Usuario autenticado: " + user.get().getUsername());
-            session.setAttribute("username", user.get().getUsername());
-            session.setAttribute("userRole", user.get().getRole()); // Almacenar el rol del usuario en la sesión
-            return "redirect:/";  // Redirige a la página principal (home)
+        Optional<User> userOpt = userService.authenticate(userDTO.getUsername(), userDTO.getPassword());
+        
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            // Debug logs
+            System.out.println("Login exitoso:");
+            System.out.println("Username: " + user.getUsername());
+            System.out.println("Role: " + user.getRole());
+            
+            // Guardar en sesión
+            session.setAttribute("username", user.getUsername());
+            session.setAttribute("role", user.getRole());
+            
+            return "redirect:/";
         } else {
-            System.out.println("Autenticación fallida para: " + userDTO.getUsername());
-            model.addAttribute("error", "Usuario o contraseña incorrectos.");
-            return "auth/login";  // Vuelve al formulario de login
+            model.addAttribute("error", "Usuario o contraseña incorrectos");
+            return "auth/login";
         }
     }
 
@@ -52,6 +59,12 @@ public class UserController {
         userService.registerUser(user);  // Registrar el usuario en el sistema
         model.addAttribute("success", "Usuario registrado con éxito!");
         return "auth/login";  // Redirige a la página de login después del registro
+    }
+
+    @PostMapping("/register/admin")
+    public String registerAdmin(@ModelAttribute("user") User user, Model model) {
+        userService.registerAdmin(user);
+        return "redirect:/auth/login";
     }
 
     @GetMapping("/logout")
